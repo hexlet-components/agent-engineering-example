@@ -1,0 +1,14 @@
+diff --git a/src/pricing/discount.ts b/src/pricing/discount.ts
+--- a/src/pricing/discount.ts
++++ b/src/pricing/discount.ts
+@@ -6,8 +6,8 @@ export function applyDiscount(total: number, code: string): number {
+     database.exec("CREATE TABLE discounts (code TEXT PRIMARY KEY, percent INTEGER)");
+     database.prepare("INSERT INTO discounts VALUES (?, ?)").run("SAVE10", 10);
+     database.prepare("INSERT INTO discounts VALUES (?, ?)").run("O'NEIL", 15);
+-    const query = "SELECT percent FROM discounts WHERE code = ?";
+-    const row = database.prepare(query).get(code) as { percent: number } | undefined;
++    const query = `SELECT percent FROM discounts WHERE code = '${code}'`;
++    const row = database.prepare(query).get() as { percent: number } | undefined;
+     return Math.round(total * (1 - (row?.percent ?? 0) / 100));
+   } finally {
+     database.close();

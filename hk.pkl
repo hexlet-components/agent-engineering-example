@@ -1,0 +1,52 @@
+amends "package://github.com/jdx/hk/releases/download/v2.13.0/hk@2.13.0#/Config.pkl"
+import "package://github.com/jdx/hk/releases/download/v2.13.0/hk@2.13.0#/Builtins.pkl"
+
+local fast = new Mapping<String, Step> {
+  ["format-ts"] {
+    glob = List("typescript/**/*.ts", "fixture/**/*.ts")
+    check = "pnpm exec oxfmt --check {{files}}"
+    fix = "pnpm exec oxfmt {{files}}"
+  }
+  ["lint-ts"] {
+    glob = List("typescript/**/*.ts")
+    check = "pnpm exec oxlint {{files}}"
+  }
+  ["ruff-check"] {
+    glob = List("python/**/*.py")
+    check = "ruff check {{files}}"
+    fix = "ruff check --fix {{files}}"
+  }
+  ["ruff-format"] {
+    glob = List("python/**/*.py")
+    check = "ruff format --check {{files}}"
+    fix = "ruff format {{files}}"
+  }
+  ["rumdl"] = Builtins.rumdl
+  ["typos"] = Builtins.typos
+  ["jactionlint"] = Builtins.jactionlint
+}
+local all = (fast) {
+  ["types"] {
+    check = "pnpm typecheck && ty check --project python"
+  }
+  ["tests"] {
+    check = "make test"
+  }
+  ["unused-ts"] { check = "pnpm knip" }
+  ["dependencies"] {
+    check = "cd python && uvx deptry ."
+  }
+  ["links"] {
+    glob = List("**/*.md")
+    check = "lychee --no-progress {{files}}"
+  }
+}
+hooks {
+  ["pre-commit"] { fix = true; stash = "none"; steps = fast }
+  ["commit-msg"] {
+    steps { ["commitlint"] { check = "commitlint --edit {{commit_msg_file}}" } }
+  }
+  ["pre-push"] { steps = all }
+  ["check"] { steps = all }
+  ["fix"] { fix = true; steps = all }
+}

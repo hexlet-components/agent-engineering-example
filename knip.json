@@ -1,0 +1,4 @@
+{
+  "entry": ["typescript/src/cli.ts", "typescript/test/**/*.test.ts"],
+  "project": ["typescript/**/*.ts"]
+}

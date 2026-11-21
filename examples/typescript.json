@@ -1,0 +1,34 @@
+{
+  "mode": "demo",
+  "status": "success",
+  "findings": [
+    {
+      "path": "src/pricing/discount.ts",
+      "line": 9,
+      "message": "Код скидки попадает в SQL через подстановку. Значение приходит из параметра запроса, поэтому код с апострофом ломает запрос. Фиксированная проверка воспроизводит отказ.",
+      "evidence": [
+        {
+          "path": "src/pricing/discount.ts",
+          "from": 9,
+          "to": 10
+        },
+        {
+          "path": "src/orders/checkout.ts",
+          "from": 3,
+          "to": 5
+        }
+      ]
+    }
+  ],
+  "check": {
+    "passed": false,
+    "exitCode": 1
+  },
+  "tools": [
+    "read_diff",
+    "search_files",
+    "read_file",
+    "read_file",
+    "run_check"
+  ]
+}

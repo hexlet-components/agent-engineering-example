@@ -1,0 +1,49 @@
+name: Check
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+permissions: {}
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - uses: jdx/mise-action@b44d12e7d0d8ee7461bb893e1b1993500433185b # v5.2.7
+      - name: Install both implementations
+        run: make setup-all
+      - name: Check
+        run: mise run check
+      - name: Run both demonstrations without model credentials
+        run: |
+          make demo
+          make demo AGENT_LANG=python
+      - name: Secrets
+        run: betterleaks git --no-banner .
+      - name: Dependencies
+        run: |
+          osv-scanner scan source --lockfile pnpm-lock.yaml --lockfile python/uv.lock
+      - name: Commit messages
+        shell: bash
+        env:
+          FROM: ${{ github.event.pull_request.base.sha || github.event.before }}
+          TO: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: |
+          if [ "$FROM" = "0000000000000000000000000000000000000000" ]; then
+            FROM="$TO^"
+            if ! git rev-parse "$FROM" >/dev/null 2>&1; then
+              git log -1 --format=%B "$TO" | commitlint
+              exit 0
+            fi
+          fi
+          commitlint --from "$FROM" --to "$TO"

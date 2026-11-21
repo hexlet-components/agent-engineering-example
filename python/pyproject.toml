@@ -1,0 +1,24 @@
+[project]
+name = "agent-engineering-example"
+version = "0.1.0"
+description = "A bounded source investigation with OpenAI Agents SDK"
+requires-python = ">=3.14"
+dependencies = ["openai-agents==0.25.0", "openai==3.57.0", "pydantic==2.14.4"]
+
+[tool.ruff]
+line-length = 100
+
+[tool.ty.src]
+include = ["agent_example", "tests"]
+
+[tool.deptry]
+known_first_party = ["agent_example"]
+[tool.deptry.package_module_name_map]
+openai-agents = ["agents"]
+
+[build-system]
+requires = ["hatchling>=1.27"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["agent_example"]

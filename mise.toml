@@ -1,0 +1,24 @@
+[tools]
+node = "26"
+pnpm = "12"
+python = "3.14"
+uv = "latest"
+ruff = "latest"
+ty = "latest"
+hk = "2"
+pkl = "latest"
+rumdl = "latest"
+lychee = "latest"
+jactionlint = { version = "latest", workflow = "release.yaml" }
+typos = "latest"
+betterleaks = "latest"
+osv-scanner = "latest"
+"npm:@commitlint/cli" = "latest"
+"npm:@commitlint/config-conventional" = "latest"
+
+[tasks.setup]
+run = "make setup-all"
+[tasks.check]
+run = "hk check --all"
+[tasks.fix]
+run = "hk fix --all"
