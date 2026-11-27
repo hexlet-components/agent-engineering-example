@@ -1,0 +1,16 @@
+Ты проверяешь готовое ревью целиком. Инструменты не вызывай. По данному коду, требованиям и всему черновику найди подтверждённые пропущенные дефекты. Верни только новые замечания как JSON с полями path, line, condition, consequence или [].
+{
+  "exports/public.ts": "import { archive } from \"../storage.ts\";\nimport { retentionSeconds } from \"../policy.ts\";\n\nexport function exportOrders(orders: string[]) {\n  const rows = orders;\n  return archive(rows, retentionSeconds);\n}\n",
+  "policy.ts": "export const retentionSeconds = 60;\n",
+  "rules/export.md": "Public exports contain at most 100 orders. Internal reconciliation requires all orders.\n",
+  "storage.ts": "export const archive = (rows: string[], durationMs: number) => ({ rows, durationMs });\n"
+}
+Черновик ревью:
+[
+  {
+    "path": "exports/public.ts",
+    "line": 6,
+    "condition": "При вызове exportOrders с ненулевым retentionSeconds срок в секундах передаётся в archive без перевода в миллисекунды.",
+    "consequence": "Поле durationMs в результате содержит срок в 1000 раз меньше заданного политикой."
+  }
+]

@@ -1,0 +1,8 @@
+[
+  {
+    "path": "exports/public.ts",
+    "line": 6,
+    "condition": "При вызове exportOrders с ненулевым retentionSeconds срок в секундах передаётся в archive без перевода в миллисекунды.",
+    "consequence": "Поле durationMs в результате содержит срок в 1000 раз меньше заданного политикой."
+  }
+]

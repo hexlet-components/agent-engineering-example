@@ -1,0 +1,14 @@
+[
+  {
+    "path": "exports/public.ts",
+    "line": 5,
+    "condition": "В exportOrders передано более 100 заказов.",
+    "consequence": "В публичный экспорт попадают все переданные заказы, что нарушает лимит в 100 заказов."
+  },
+  {
+    "path": "exports/public.ts",
+    "line": 6,
+    "condition": "При каждом вызове exportOrders значение retentionSeconds передаётся в archive без перевода в миллисекунды.",
+    "consequence": "В результате durationMs равно 60 вместо 60000, поэтому указанный срок хранения в 1000 раз короче заданного."
+  }
+]

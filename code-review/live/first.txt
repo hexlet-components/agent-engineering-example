@@ -1,0 +1,21 @@
+Выполни код-ревью по предоставленным данным. Инструменты не вызывай. Верни только список подтверждённых функциональных дефектов в JSON с полями path, line, condition, consequence или [].
+diff --git a/exports/public.ts b/exports/public.ts
+new file mode 100644
+index 0000000..2e03d8d
+--- /dev/null
++++ b/exports/public.ts
+@@ -0,0 +1,7 @@
++import { archive } from "../storage.ts";
++import { retentionSeconds } from "../policy.ts";
++
++export function exportOrders(orders: string[]) {
++  const rows = orders;
++  return archive(rows, retentionSeconds);
++}
+diff --git a/storage.ts b/storage.ts
+index 53f373c..80b1fb1 100644
+--- a/storage.ts
++++ b/storage.ts
+@@ -1 +1 @@
+-export const archive = (rows: string[]) => ({ rows });
++export const archive = (rows: string[], durationMs: number) => ({ rows, durationMs });

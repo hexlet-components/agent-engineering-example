@@ -1,0 +1,51 @@
+{
+  "split": "holdout",
+  "versions": [
+    "partner",
+    "reconcile",
+    "boundary"
+  ],
+  "lock": "d3075fac57ca490982dbe915f9919d3fd816cee5e047455a5ab587978f2e3546",
+  "scores": [
+    {
+      "name": "baseline",
+      "found": 1,
+      "missed": 2,
+      "wrong": 1,
+      "duplicates": 0,
+      "calls": 3,
+      "apiCost": 0,
+      "localMs": 1.257
+    },
+    {
+      "name": "critic",
+      "found": 2,
+      "missed": 1,
+      "wrong": 0,
+      "duplicates": 0,
+      "calls": 6,
+      "apiCost": 0,
+      "localMs": 0.203
+    },
+    {
+      "name": "verified",
+      "found": 2,
+      "missed": 1,
+      "wrong": 0,
+      "duplicates": 1,
+      "calls": 20,
+      "apiCost": 0,
+      "localMs": 0.163
+    },
+    {
+      "name": "filtered",
+      "found": 1,
+      "missed": 2,
+      "wrong": 0,
+      "duplicates": 0,
+      "calls": 12,
+      "apiCost": 0,
+      "localMs": 0.247
+    }
+  ]
+}
