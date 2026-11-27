@@ -1,0 +1,410 @@
+{
+  "agent-loop": [
+    {
+      "name": "incomplete",
+      "steps": [
+        {
+          "name": "read_ticket",
+          "arguments": {
+            "ticket_id": "T-42"
+          }
+        },
+        {
+          "action": "ask_author",
+          "reason": "Был ли включён фильтр по дате при экспорте CSV?",
+          "sources": [
+            "T-42"
+          ]
+        }
+      ]
+    }
+  ],
+  "tool-contracts": [
+    {
+      "name": "found",
+      "steps": [
+        {
+          "name": "read_ticket",
+          "arguments": {
+            "ticket_id": "T-42"
+          }
+        },
+        {
+          "name": "search_tickets",
+          "arguments": {
+            "query": "CSV"
+          }
+        },
+        {
+          "name": "read_ticket",
+          "arguments": {
+            "ticket_id": "T-17"
+          }
+        },
+        {
+          "action": "ask_author",
+          "reason": "В T-17 пустой файл получали с фильтром даты. В T-42 условие пока неизвестно. Был ли включён фильтр?",
+          "sources": [
+            "T-42",
+            "T-17"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "empty",
+      "steps": [
+        {
+          "name": "read_ticket",
+          "arguments": {
+            "ticket_id": "T-42"
+          }
+        },
+        {
+          "name": "search_tickets",
+          "arguments": {
+            "query": "PDF"
+          }
+        },
+        {
+          "name": "search_tickets",
+          "arguments": {
+            "query": "CSV"
+          }
+        },
+        {
+          "name": "read_ticket",
+          "arguments": {
+            "ticket_id": "T-17"
+          }
+        },
+        {
+          "action": "ask_author",
+          "reason": "В T-17 пустой файл получали с фильтром даты. В T-42 условие пока неизвестно. Был ли включён фильтр?",
+          "sources": [
+            "T-42",
+            "T-17"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "unavailable",
+      "steps": [
+        {
+          "name": "read_ticket",
+          "arguments": {
+            "ticket_id": "T-42"
+          }
+        },
+        {
+          "name": "search_tickets",
+          "arguments": {
+            "query": "CSV"
+          }
+        },
+        {
+          "action": "ask_author",
+          "reason": "Трекер недоступен, похожие обращения пока не удалось проверить. Был ли включён фильтр по дате при экспорте CSV?",
+          "sources": [
+            "T-42"
+          ]
+        }
+      ],
+      "offline": true
+    }
+  ],
+  "agent-instructions": [
+    {
+      "name": "incomplete",
+      "steps": [
+        {
+          "name": "read_ticket",
+          "arguments": {
+            "ticket_id": "T-42"
+          }
+        },
+        {
+          "action": "ask_author",
+          "reason": "Был ли включён фильтр по дате при экспорте CSV?",
+          "sources": [
+            "T-42"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "complete",
+      "steps": [
+        {
+          "name": "read_ticket",
+          "arguments": {
+            "ticket_id": "T-42"
+          }
+        },
+        {
+          "action": "check_export",
+          "reason": "Фильтр даты был включён. Стоит сравнить экспорт за тот же период с фильтром и без него.",
+          "sources": [
+            "T-42"
+          ]
+        }
+      ],
+      "reply": "При экспорте был включён фильтр даты."
+    }
+  ],
+  "trust-boundaries": [
+    {
+      "name": "reader",
+      "steps": [
+        {
+          "name": "read_ticket",
+          "arguments": {
+            "ticket_id": "T-42"
+          }
+        },
+        {
+          "name": "set_label",
+          "arguments": {
+            "ticket_id": "T-42",
+            "label": "needs-info"
+          }
+        },
+        {
+          "action": "ask_author",
+          "reason": "Был ли включён фильтр по дате при экспорте CSV?",
+          "sources": [
+            "T-42"
+          ]
+        }
+      ],
+      "write_labels": false
+    },
+    {
+      "name": "maintainer",
+      "steps": [
+        {
+          "name": "read_ticket",
+          "arguments": {
+            "ticket_id": "T-42"
+          }
+        },
+        {
+          "name": "set_label",
+          "arguments": {
+            "ticket_id": "T-42",
+            "label": "needs-info"
+          }
+        },
+        {
+          "action": "ask_author",
+          "reason": "Был ли включён фильтр по дате при экспорте CSV?",
+          "sources": [
+            "T-42"
+          ]
+        }
+      ],
+      "write_labels": true
+    }
+  ],
+  "source-discovery": [
+    {
+      "name": "compare",
+      "steps": [
+        {
+          "name": "read_ticket",
+          "arguments": {
+            "ticket_id": "T-42"
+          }
+        },
+        {
+          "name": "search_tickets",
+          "arguments": {
+            "query": "CSV"
+          }
+        },
+        {
+          "name": "read_ticket",
+          "arguments": {
+            "ticket_id": "T-17"
+          }
+        },
+        {
+          "action": "ask_author",
+          "reason": "В T-17 пустой файл получали с фильтром даты. В T-42 условие пока неизвестно. Был ли включён фильтр?",
+          "sources": [
+            "T-42",
+            "T-17"
+          ]
+        }
+      ]
+    }
+  ],
+  "context-budget": [
+    {
+      "name": "summary",
+      "steps": [
+        {
+          "name": "read_ticket",
+          "arguments": {
+            "ticket_id": "T-42"
+          }
+        },
+        {
+          "action": "ask_author",
+          "reason": "Был ли включён фильтр по дате при экспорте CSV?",
+          "sources": [
+            "T-42"
+          ]
+        }
+      ]
+    }
+  ],
+  "task-state": [
+    {
+      "name": "incomplete",
+      "steps": [
+        {
+          "name": "read_ticket",
+          "arguments": {
+            "ticket_id": "T-42"
+          }
+        },
+        {
+          "action": "ask_author",
+          "reason": "Был ли включён фильтр по дате при экспорте CSV?",
+          "sources": [
+            "T-42"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "reply",
+      "steps": [
+        {
+          "name": "read_ticket",
+          "arguments": {
+            "ticket_id": "T-42"
+          }
+        },
+        {
+          "action": "check_export",
+          "reason": "Фильтр даты был включён. Стоит сравнить экспорт за тот же период с фильтром и без него.",
+          "sources": [
+            "T-42"
+          ]
+        }
+      ]
+    }
+  ],
+  "mcp": [
+    {
+      "name": "incomplete",
+      "steps": [
+        {
+          "name": "read_ticket",
+          "arguments": {
+            "ticket_id": "T-42"
+          }
+        },
+        {
+          "action": "ask_author",
+          "reason": "Был ли включён фильтр по дате при экспорте CSV?",
+          "sources": [
+            "T-42"
+          ]
+        }
+      ]
+    }
+  ],
+  "verification": [
+    {
+      "name": "repair",
+      "steps": [
+        {
+          "name": "read_ticket",
+          "arguments": {
+            "ticket_id": "T-42"
+          }
+        },
+        {
+          "action": "ask_author",
+          "reason": "В T-17 пустой файл получали с фильтром даты. В T-42 условие пока неизвестно. Был ли включён фильтр?",
+          "sources": [
+            "T-42",
+            "T-17"
+          ]
+        },
+        {
+          "name": "read_ticket",
+          "arguments": {
+            "ticket_id": "T-17"
+          }
+        },
+        {
+          "action": "ask_author",
+          "reason": "В T-17 пустой файл получали с фильтром даты. В T-42 условие пока неизвестно. Был ли включён фильтр?",
+          "sources": [
+            "T-42",
+            "T-17"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "limit",
+      "steps": [
+        {
+          "name": "read_ticket",
+          "arguments": {
+            "ticket_id": "T-42"
+          }
+        },
+        {
+          "action": "ask_author",
+          "reason": "В T-17 пустой файл получали с фильтром даты. В T-42 условие пока неизвестно. Был ли включён фильтр?",
+          "sources": [
+            "T-42",
+            "T-17"
+          ]
+        },
+        {
+          "action": "ask_author",
+          "reason": "В T-17 пустой файл получали с фильтром даты. В T-42 условие пока неизвестно. Был ли включён фильтр?",
+          "sources": [
+            "T-42",
+            "T-17"
+          ]
+        }
+      ]
+    }
+  ],
+  "trajectories": [
+    {
+      "name": "replay",
+      "steps": [
+        {
+          "name": "read_ticket",
+          "arguments": {
+            "ticket_id": "T-42"
+          }
+        },
+        {
+          "name": "read_ticket",
+          "arguments": {
+            "ticket_id": "T-17"
+          }
+        },
+        {
+          "action": "ask_author",
+          "reason": "В T-17 пустой файл получали с фильтром даты. В T-42 условие пока неизвестно. Был ли включён фильтр?",
+          "sources": [
+            "T-42",
+            "T-17"
+          ]
+        }
+      ]
+    }
+  ]
+}

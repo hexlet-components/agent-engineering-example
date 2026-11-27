@@ -4,5 +4,5 @@
     "strict": true, "noEmit": true, "allowImportingTsExtensions": true, "skipLibCheck": true,
     "types": ["node"]
   },
-  "include": ["typescript/**/*.ts", "fixture/**/*.ts"]
+  "include": ["typescript/**/*.ts"]
 }

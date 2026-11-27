@@ -1,9 +1,14 @@
 [project]
 name = "agent-engineering-example"
 version = "0.1.0"
-description = "A bounded source investigation with OpenAI Agents SDK"
+description = "Ticket triage with OpenAI Agents SDK"
 requires-python = ">=3.14"
-dependencies = ["openai-agents==0.25.0", "openai==3.57.0", "pydantic==2.14.4"]
+dependencies = [
+    "mcp==2.3.0",
+    "openai-agents==0.25.0",
+    "openai==3.57.0",
+    "pydantic==2.14.4",
+]
 
 [tool.ruff]
 line-length = 100

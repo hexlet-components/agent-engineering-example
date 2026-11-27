@@ -1,34 +1,66 @@
 {
+  "scenario": "trajectories",
   "mode": "demo",
-  "status": "success",
-  "findings": [
+  "runs": [
     {
-      "path": "src/pricing/discount.ts",
-      "line": 9,
-      "message": "Код скидки попадает в SQL через подстановку. Значение приходит из параметра запроса, поэтому код с апострофом ломает запрос. Фиксированная проверка воспроизводит отказ.",
-      "evidence": [
+      "case": "replay",
+      "trace": [
         {
-          "path": "src/pricing/discount.ts",
-          "from": 9,
-          "to": 10
+          "type": "call",
+          "call_id": "demo-1",
+          "name": "read_ticket",
+          "arguments": {
+            "ticket_id": "T-42"
+          }
         },
         {
-          "path": "src/orders/checkout.ts",
-          "from": 3,
-          "to": 5
+          "type": "result",
+          "call_id": "demo-1",
+          "output": {
+            "status": "found",
+            "ticket": {
+              "id": "T-42",
+              "text": "При экспорте CSV получаю пустой файл",
+              "comments": []
+            }
+          }
+        },
+        {
+          "type": "call",
+          "call_id": "demo-2",
+          "name": "read_ticket",
+          "arguments": {
+            "ticket_id": "T-17"
+          }
+        },
+        {
+          "type": "result",
+          "call_id": "demo-2",
+          "output": {
+            "status": "found",
+            "ticket": {
+              "id": "T-17",
+              "text": "Пустой CSV при включённом фильтре по дате. Без фильтра строки есть.",
+              "comments": []
+            }
+          }
         }
-      ]
+      ],
+      "decisions": [
+        {
+          "decision": "accepted",
+          "issues": [],
+          "report": {
+            "action": "ask_author",
+            "reason": "В T-17 пустой файл получали с фильтром даты. В T-42 условие пока неизвестно. Был ли включён фильтр?",
+            "sources": [
+              "T-42",
+              "T-17"
+            ]
+          }
+        }
+      ],
+      "labels": {}
     }
-  ],
-  "check": {
-    "passed": false,
-    "exitCode": 1
-  },
-  "tools": [
-    "read_diff",
-    "search_files",
-    "read_file",
-    "read_file",
-    "run_check"
   ]
 }

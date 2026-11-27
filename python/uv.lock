@@ -7,6 +7,7 @@ name = "agent-engineering-example"
 version = "0.1.0"
 source = { editable = "." }
 dependencies = [
+    { name = "mcp" },
     { name = "openai" },
     { name = "openai-agents" },
     { name = "pydantic" },
@@ -14,6 +15,7 @@ dependencies = [
 
 [package.metadata]
 requires-dist = [
+    { name = "mcp", specifier = "==2.3.0" },
     { name = "openai", specifier = "==3.57.0" },
     { name = "openai-agents", specifier = "==0.25.0" },
     { name = "pydantic", specifier = "==2.14.4" },

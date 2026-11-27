@@ -1,72 +1,63 @@
-import { test } from "node:test";
 import assert from "node:assert/strict";
-import { mkdtemp, mkdir, writeFile, symlink, rm } from "node:fs/promises";
+import { mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { Workspace } from "../src/workspace.ts";
-import { investigate } from "../src/agent.ts";
-import { demoReport } from "../src/demo-model.ts";
+import test from "node:test";
+import { investigate, resume } from "../src/agent.ts";
+import { fixture } from "../src/workspace.ts";
 
-test("demo executes the real SDK, reads sources and reproduces the defect", async () => {
-  const result = await investigate({ demo: true });
-  assert.equal(result.mode, "demo");
-  assert.equal(result.status, "success");
-  assert.equal(result.check?.passed, false);
-  assert.equal(result.check?.exitCode, 1);
-  assert.match(result.check?.output ?? "", /NEIL/);
-  assert.deepEqual(result.findings, demoReport.findings);
-  assert.deepEqual(
-    result.trace.map((item) => item.name).sort(),
-    ["read_diff", "search_files", "read_file", "read_file", "run_check"].sort(),
-  );
-});
-test("SDK stops before completion when the turn budget is too small", async () => {
-  await assert.rejects(investigate({ demo: true, maxTurns: 1 }), /Max turns/);
-});
-test("tools reject traversal, invalid ranges and arbitrary commands", async () => {
-  const work = new Workspace();
-  await assert.rejects(work.invoke("read_file", { path: "../package.json" }), /PATH_DENIED/);
-  await assert.rejects(
-    work.invoke("read_file", { path: "src/pricing/discount.ts", limit: 41 }),
-    /LINE_LIMIT/,
-  );
-  await assert.rejects(work.invoke("shell", { command: "echo should-not-run" }), /TOOL_DENIED/);
-});
-test("tool budget applies even when the model asks for more calls in one turn", async () => {
-  const work = new Workspace(undefined, 1);
-  await work.invoke("list_files");
-  await assert.rejects(work.invoke("read_diff"), /TOOL_BUDGET/);
-});
-test("a successful answer requires the fixed check and actual evidence", async () => {
-  const work = new Workspace();
-  assert.throws(() => work.validate(demoReport), /CHECK_REQUIRED/);
-  await work.invoke("run_check");
-  assert.throws(() => work.validate(demoReport), /UNREAD_EVIDENCE/);
-  assert.throws(() => work.validate({ findings: [] }), /UNEXPLAINED_CHECK_FAILURE/);
-});
-test("a symlink cannot grant access outside the fixture", async () => {
-  const root = await mkdtemp(join(tmpdir(), "agent-example-"));
+for (const scenario of Object.keys(fixture("scenarios") as object)) {
+  test(scenario, async () => {
+    const result = await investigate({ scenario });
+    for (const run of result.runs) {
+      const calls = run.trace.filter((e) => e.type === "call").map((e) => e.call_id);
+      assert.ok(calls.length);
+      assert.equal(calls.length, new Set(calls).size);
+      assert.deepEqual(
+        calls,
+        run.trace.filter((e) => e.type === "result").map((e) => e.call_id),
+      );
+      const expected =
+        scenario === "verification"
+          ? ["retry", run.case === "repair" ? "accepted" : "exhausted"]
+          : ["accepted"];
+      assert.deepEqual(
+        run.decisions.map((d) => d.decision),
+        expected,
+      );
+    }
+    if (scenario === "trajectories") {
+      const tickets = fixture("tickets") as Record<string, unknown>;
+      const events = result.runs[0].trace;
+      for (const [index, id] of ["T-42", "T-17"].entries()) {
+        const [request, response] = events.slice(2 * index, 2 * index + 2);
+        assert.equal(request.name, "read_ticket");
+        assert.deepEqual(request.arguments, { ticket_id: id });
+        assert.equal(response.call_id, request.call_id);
+        assert.deepEqual(response.output, { status: "found", ticket: tickets[id] });
+      }
+    }
+    if (scenario === "trust-boundaries")
+      assert.deepEqual(
+        result.runs.map((r) => r.labels),
+        [{}, { "T-42": "needs-info" }],
+      );
+    if (scenario === "task-state")
+      assert.deepEqual(
+        result.runs.map((r) => r.decisions[0].report.action),
+        ["ask_author", "check_export"],
+      );
+  });
+}
+test("wrong reply keeps pause", async () => {
+  const folder = await mkdtemp(join(tmpdir(), "ticket-test-"));
   try {
-    await mkdir(join(root, "fixture"));
-    await writeFile(join(root, "private.txt"), "private");
-    await symlink(join(root, "private.txt"), join(root, "fixture", "outside.txt"));
-    await assert.rejects(
-      new Workspace(join(root, "fixture")).invoke("read_file", { path: "outside.txt" }),
-      /PATH_DENIED/,
-    );
+    const path = join(folder, "task.json");
+    const state = { status: "waiting", request_id: "Q-42", ticket_id: "T-42", reason: "Фильтр?" };
+    await writeFile(path, JSON.stringify(state));
+    await assert.rejects(resume(path, { request_id: "Q-17", ticket_id: "T-42", text: "Да" }));
+    assert.deepEqual(JSON.parse(await readFile(path, "utf8")), state);
   } finally {
-    await rm(root, { recursive: true, force: true });
-  }
-});
-
-test("a withheld oversized result cannot become evidence", async () => {
-  const root = await mkdtemp(join(tmpdir(), "agent-large-"));
-  try {
-    await writeFile(join(root, "large.ts"), "x".repeat(9000));
-    const work = new Workspace(root);
-    await assert.rejects(work.invoke("read_file", { path: "large.ts" }), /OUTPUT_LIMIT/);
-    assert.deepEqual(work.reads, []);
-  } finally {
-    await rm(root, { recursive: true, force: true });
+    await rm(folder, { recursive: true, force: true });
   }
 });

@@ -3,7 +3,7 @@ import "package://github.com/jdx/hk/releases/download/v2.13.0/hk@2.13.0#/Builtin
 
 local fast = new Mapping<String, Step> {
   ["format-ts"] {
-    glob = List("typescript/**/*.ts", "fixture/**/*.ts")
+    glob = List("typescript/**/*.ts")
     check = "pnpm exec oxfmt --check {{files}}"
     fix = "pnpm exec oxfmt {{files}}"
   }
