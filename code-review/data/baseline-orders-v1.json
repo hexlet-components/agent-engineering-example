@@ -1,0 +1,62 @@
+{
+  "event": "/review",
+  "mergeBase": "7a92fda1806dd9e6d9971d8357832e17b75f0c87",
+  "head": "04a850683a51b4c60fe8ae5c849eebbd76e2b430",
+  "diff": "diff --git a/exports/public.ts b/exports/public.ts\nnew file mode 100644\nindex 0000000..2e03d8d\n--- /dev/null\n+++ b/exports/public.ts\n@@ -0,0 +1,7 @@\n+import { archive } from \"../storage.ts\";\n+import { retentionSeconds } from \"../policy.ts\";\n+\n+export function exportOrders(orders: string[]) {\n+  const rows = orders;\n+  return archive(rows, retentionSeconds);\n+}\ndiff --git a/storage.ts b/storage.ts\nindex 53f373c..80b1fb1 100644\n--- a/storage.ts\n+++ b/storage.ts\n@@ -1 +1 @@\n-export const archive = (rows: string[]) => ({ rows });\n+export const archive = (rows: string[], durationMs: number) => ({ rows, durationMs });\n",
+  "initial": [
+    {
+      "kind": "limit",
+      "path": "exports/public.ts",
+      "line": 5,
+      "text": "При 101 заказе экспорт запишет все 101. Публичная выгрузка допускает только 100.",
+      "direction": "general",
+      "severity": "high"
+    }
+  ],
+  "candidates": [
+    {
+      "kind": "limit",
+      "path": "exports/public.ts",
+      "line": 5,
+      "text": "При 101 заказе экспорт запишет все 101. Публичная выгрузка допускает только 100.",
+      "direction": "general",
+      "severity": "high"
+    }
+  ],
+  "published": [
+    {
+      "kind": "limit",
+      "path": "exports/public.ts",
+      "line": 5,
+      "text": "При 101 заказе экспорт запишет все 101. Публичная выгрузка допускает только 100.",
+      "direction": "general",
+      "severity": "high"
+    }
+  ],
+  "trace": [
+    {
+      "role": "general",
+      "paths": [
+        "exports/public.ts",
+        "storage.ts"
+      ],
+      "status": "checked"
+    },
+    {
+      "role": "code-scope",
+      "paths": [
+        "policy.ts"
+      ],
+      "status": "skipped"
+    },
+    {
+      "role": "code-scope",
+      "paths": [
+        "rules/export.md"
+      ],
+      "status": "skipped"
+    }
+  ],
+  "calls": 1,
+  "localMs": 0.26416600000004564
+}

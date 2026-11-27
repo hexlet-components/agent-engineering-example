@@ -1,0 +1,141 @@
+{
+  "split": "work",
+  "versions": [
+    "orders-v1",
+    "orders-v2",
+    "internal",
+    "clean"
+  ],
+  "scores": [
+    {
+      "name": "baseline",
+      "found": 1,
+      "missed": 2,
+      "wrong": 1,
+      "duplicates": 0,
+      "calls": 4,
+      "apiCost": 0,
+      "localMs": 0.416
+    },
+    {
+      "name": "context",
+      "found": 1,
+      "missed": 2,
+      "wrong": 0,
+      "duplicates": 0,
+      "calls": 4,
+      "apiCost": 0,
+      "localMs": 0.13
+    },
+    {
+      "name": "lookup",
+      "found": 1,
+      "missed": 2,
+      "wrong": 0,
+      "duplicates": 0,
+      "calls": 6,
+      "apiCost": 0,
+      "localMs": 0.398
+    },
+    {
+      "name": "specialists",
+      "found": 3,
+      "missed": 0,
+      "wrong": 4,
+      "duplicates": 1,
+      "calls": 16,
+      "apiCost": 0,
+      "localMs": 0.075
+    },
+    {
+      "name": "routed",
+      "found": 3,
+      "missed": 0,
+      "wrong": 4,
+      "duplicates": 1,
+      "calls": 12,
+      "apiCost": 0,
+      "localMs": 0.108
+    },
+    {
+      "name": "whole",
+      "found": 3,
+      "missed": 0,
+      "wrong": 4,
+      "duplicates": 1,
+      "calls": 12,
+      "apiCost": 0,
+      "localMs": 0.063
+    },
+    {
+      "name": "files",
+      "found": 1,
+      "missed": 2,
+      "wrong": 4,
+      "duplicates": 1,
+      "calls": 24,
+      "apiCost": 0,
+      "localMs": 0.068
+    },
+    {
+      "name": "linked",
+      "found": 3,
+      "missed": 0,
+      "wrong": 4,
+      "duplicates": 1,
+      "calls": 12,
+      "apiCost": 0,
+      "localMs": 0.441
+    },
+    {
+      "name": "partial",
+      "found": 1,
+      "missed": 2,
+      "wrong": 4,
+      "duplicates": 1,
+      "calls": 12,
+      "apiCost": 0,
+      "localMs": 0.35
+    },
+    {
+      "name": "verified",
+      "found": 3,
+      "missed": 0,
+      "wrong": 0,
+      "duplicates": 1,
+      "calls": 26,
+      "apiCost": 0,
+      "localMs": 0.119
+    },
+    {
+      "name": "consensus",
+      "found": 1,
+      "missed": 2,
+      "wrong": 0,
+      "duplicates": 0,
+      "calls": 9,
+      "apiCost": 0,
+      "localMs": 0.144
+    },
+    {
+      "name": "critic",
+      "found": 3,
+      "missed": 0,
+      "wrong": 0,
+      "duplicates": 0,
+      "calls": 8,
+      "apiCost": 0,
+      "localMs": 0.063
+    },
+    {
+      "name": "filtered",
+      "found": 1,
+      "missed": 2,
+      "wrong": 0,
+      "duplicates": 0,
+      "calls": 16,
+      "apiCost": 0,
+      "localMs": 0.146
+    }
+  ]
+}

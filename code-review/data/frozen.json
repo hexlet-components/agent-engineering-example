@@ -1,0 +1,38 @@
+{
+  "profiles": {
+    "baseline": {
+      "context": false,
+      "specialists": "general",
+      "scope": "whole",
+      "stage": "none"
+    },
+    "critic": {
+      "context": true,
+      "specialists": "general",
+      "scope": "whole",
+      "stage": "critic"
+    },
+    "verified": {
+      "context": false,
+      "specialists": "all",
+      "scope": "whole",
+      "stage": "verify"
+    },
+    "filtered": {
+      "context": true,
+      "specialists": "all",
+      "scope": "whole",
+      "stage": "filter"
+    }
+  },
+  "sources": {
+    "git.ts": "155222d1f5545aef04644ca960ca9882306f6b8683ae297dc9a67460b8dd69bf",
+    "reviewer.ts": "04918d0a5964501560166c164175b531f4f63ff46a043f56f35421e94abc47df",
+    "run.ts": "83c9a43e1470dd41b0f9a1457c403d876ca7097609ba4408d6e1977dc0cd797c",
+    "oracle.ts": "790dd4ee0f1eaa2ec06672c1e836b469bd29d8a1789d68df5f044d0a77250bd1",
+    "data/revisions.json": "38fab26426c8b5a3f0559a11f013e43f2df42f5fe08f7a4a6c27f5e0486f0829",
+    "data/history.fi": "984b8ac562924ab8aac2f0a10af722795aa3b88bba4bfee786fa8dc1c997a677",
+    "data/labels.json": "3f565f21316d9df5842628079450582aa26a21cf90f54db8ec291bf130fa4a6e",
+    "data/discussions.json": "e39588f99301ea349ac362ba06ad44a4ccb0cf1c2842294396c86f2469cfdf05"
+  }
+}

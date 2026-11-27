@@ -1,0 +1,237 @@
+blob
+mark :1
+data 36
+export const retentionSeconds = 60;
+
+blob
+mark :2
+data 88
+Public exports contain at most 100 orders. Internal reconciliation requires all orders.
+
+blob
+mark :3
+data 55
+export const archive = (rows: string[]) => ({ rows });
+
+reset refs/heads/main
+commit refs/heads/main
+mark :4
+author Review Lab <review@example.org> 1767225600 +0000
+committer Review Lab <review@example.org> 1767225600 +0000
+data 21
+Base export contract
+M 100644 :1 policy.ts
+M 100644 :2 rules/export.md
+M 100644 :3 storage.ts
+
+blob
+mark :5
+data 287
+import { archive } from "../storage.ts";
+import { retentionSeconds } from "../policy.ts";
+
+export function exportOrders(orders: string[]) {
+  // The archive preserves the input order.
+  const rows = orders;
+  const duration = retentionSeconds * 1000;
+  return archive(rows, duration);
+}
+
+blob
+mark :6
+data 87
+export const archive = (rows: string[], durationMs: number) => ({ rows, durationMs });
+
+commit refs/heads/reconcile
+mark :7
+author Review Lab <review@example.org> 1767225600 +0000
+committer Review Lab <review@example.org> 1767225600 +0000
+data 10
+reconcile
+from :4
+M 100644 :5 exports/internal.ts
+M 100644 :6 storage.ts
+
+blob
+mark :8
+data 251
+import { archive } from "../storage.ts";
+import { retentionSeconds } from "../policy.ts";
+
+export function exportOrders(orders: string[]) {
+  // The archive preserves the input order.
+  const rows = orders;
+  return archive(rows, retentionSeconds);
+}
+
+commit refs/heads/partner
+mark :9
+author Review Lab <review@example.org> 1767225600 +0000
+committer Review Lab <review@example.org> 1767225600 +0000
+data 8
+partner
+from :4
+M 100644 :8 exports/partner.ts
+M 100644 :6 storage.ts
+
+blob
+mark :10
+data 207
+import { archive } from "../storage.ts";
+import { retentionSeconds } from "../policy.ts";
+
+export function exportOrders(orders: string[]) {
+  const rows = orders;
+  return archive(rows, retentionSeconds);
+}
+
+commit refs/tags/orders-v1-snapshot
+mark :11
+author Review Lab <review@example.org> 1767225600 +0000
+committer Review Lab <review@example.org> 1767225600 +0000
+data 10
+orders-v1
+from :4
+M 100644 :10 exports/public.ts
+M 100644 :6 storage.ts
+
+blob
+mark :12
+data 265
+import { archive } from "../storage.ts";
+import { retentionSeconds } from "../policy.ts";
+
+export function exportOrders(orders: string[]) {
+  // The archive preserves the input order.
+  const rows = orders.slice(0, 100);
+  return archive(rows, retentionSeconds);
+}
+
+commit refs/heads/orders-v1
+mark :13
+author Review Lab <review@example.org> 1767225600 +0000
+committer Review Lab <review@example.org> 1767225600 +0000
+data 10
+orders-v2
+from :11
+M 100644 :12 exports/public.ts
+
+commit refs/heads/next-public
+mark :14
+author Review Lab <review@example.org> 1767225600 +0000
+committer Review Lab <review@example.org> 1767225600 +0000
+data 12
+next-public
+from :4
+M 100644 :5 exports/public.ts
+M 100644 :6 storage.ts
+
+blob
+mark :15
+data 258
+import { archive } from "../storage.ts";
+import { retentionSeconds } from "../policy.ts";
+
+export function exportOrders(orders: string[]) {
+  // The archive preserves the input order.
+  const rows = orders;
+  return archive(rows, retentionSeconds * 1000);
+}
+
+commit refs/heads/next-internal
+mark :16
+author Review Lab <review@example.org> 1767225600 +0000
+committer Review Lab <review@example.org> 1767225600 +0000
+data 14
+next-internal
+from :4
+M 100644 :15 exports/internal.ts
+M 100644 :6 storage.ts
+
+blob
+mark :17
+data 214
+import { archive } from "../storage.ts";
+import { retentionSeconds } from "../policy.ts";
+
+export function exportOrders(orders: string[]) {
+  const rows = orders;
+  return archive(rows, retentionSeconds * 1000);
+}
+
+commit refs/heads/internal
+mark :18
+author Review Lab <review@example.org> 1767225600 +0000
+committer Review Lab <review@example.org> 1767225600 +0000
+data 9
+internal
+from :4
+M 100644 :17 exports/internal.ts
+M 100644 :6 storage.ts
+
+blob
+mark :19
+data 228
+import { archive } from "../storage.ts";
+import { retentionSeconds } from "../policy.ts";
+
+export function exportOrders(orders: string[]) {
+  const rows = orders.slice(0, 100);
+  return archive(rows, retentionSeconds * 1000);
+}
+
+commit refs/heads/clean
+mark :20
+author Review Lab <review@example.org> 1767225600 +0000
+committer Review Lab <review@example.org> 1767225600 +0000
+data 6
+clean
+from :4
+M 100644 :19 exports/public.ts
+M 100644 :6 storage.ts
+
+blob
+mark :21
+data 228
+import { archive } from "../storage.ts";
+import { retentionSeconds } from "../policy.ts";
+
+export function exportOrders(orders: string[]) {
+  const rows = orders.slice(0, 101);
+  return archive(rows, retentionSeconds * 1000);
+}
+
+commit refs/heads/boundary
+mark :22
+author Review Lab <review@example.org> 1767225600 +0000
+committer Review Lab <review@example.org> 1767225600 +0000
+data 9
+boundary
+from :4
+M 100644 :21 exports/partner.ts
+M 100644 :6 storage.ts
+
+reset refs/tags/reconcile-snapshot
+from :7
+
+reset refs/tags/partner-snapshot
+from :9
+
+reset refs/tags/orders-v2-snapshot
+from :13
+
+reset refs/tags/next-public-snapshot
+from :14
+
+reset refs/tags/next-internal-snapshot
+from :16
+
+reset refs/tags/internal-snapshot
+from :18
+
+reset refs/tags/clean-snapshot
+from :20
+
+reset refs/tags/boundary-snapshot
+from :22
+

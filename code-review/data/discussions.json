@@ -1,0 +1,5 @@
+[
+  {"version":"internal","speaker":"bot","path":"exports/internal.ts","line":5,"text":"Ограничьте выгрузку ста записями."},
+  {"version":"internal","speaker":"author","replyTo":"bot","outcome":"rejected","text":"Ночной отчёт сверяет все заказы. Ограничение действует только во внешнем экспорте, см. rules/export.md."},
+  {"version":"orders-v1","speaker":"human","path":"exports/public.ts","line":6,"outcome":"missed-by-baseline","text":"В storage.ts второй аргумент в миллисекундах. При настройке 60 секунд архив исчезнет через 60 миллисекунд."}
+]

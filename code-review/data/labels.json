@@ -1,0 +1,51 @@
+{
+  "orders-v1": [
+    {
+      "path": "exports/public.ts",
+      "line": 5,
+      "kind": "limit"
+    },
+    {
+      "path": "exports/public.ts",
+      "line": 6,
+      "kind": "ttl"
+    }
+  ],
+  "orders-v2": [
+    {
+      "path": "exports/public.ts",
+      "line": 7,
+      "kind": "ttl"
+    }
+  ],
+  "internal": [],
+  "clean": [],
+  "partner": [
+    {
+      "path": "exports/partner.ts",
+      "line": 6,
+      "kind": "limit"
+    },
+    {
+      "path": "exports/partner.ts",
+      "line": 7,
+      "kind": "ttl"
+    }
+  ],
+  "reconcile": [],
+  "boundary": [
+    {
+      "path": "exports/partner.ts",
+      "line": 5,
+      "kind": "limit"
+    }
+  ],
+  "next-internal": [],
+  "next-public": [
+    {
+      "path": "exports/public.ts",
+      "line": 6,
+      "kind": "limit"
+    }
+  ]
+}

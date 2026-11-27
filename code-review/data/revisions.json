@@ -1,0 +1,56 @@
+{
+  "base": "7a92fda1806dd9e6d9971d8357832e17b75f0c87",
+  "work": [
+    "orders-v1",
+    "orders-v2",
+    "internal",
+    "clean"
+  ],
+  "transfer": [
+    "next-internal",
+    "next-public"
+  ],
+  "holdout": [
+    "partner",
+    "reconcile",
+    "boundary"
+  ],
+  "revisions": {
+    "orders-v1": {
+      "path": "exports/public.ts",
+      "head": "04a850683a51b4c60fe8ae5c849eebbd76e2b430"
+    },
+    "orders-v2": {
+      "path": "exports/public.ts",
+      "head": "6ce9689bb430e08cc7a7d658475b525b32b21557"
+    },
+    "internal": {
+      "path": "exports/internal.ts",
+      "head": "fa255778bf2dec9cf5c1b2292ac44062f4dc7240"
+    },
+    "clean": {
+      "path": "exports/public.ts",
+      "head": "8c023d12a42d2f1e892bc220c5b291efa0bb498d"
+    },
+    "next-internal": {
+      "path": "exports/internal.ts",
+      "head": "a80602aaacf7c62f96f45ea73b4f0bd3c00878c4"
+    },
+    "next-public": {
+      "path": "exports/public.ts",
+      "head": "d6314e1eaa2e8d5712e932081ed8057bdcc3ddfa"
+    },
+    "partner": {
+      "path": "exports/partner.ts",
+      "head": "ad12e4f9161d28d4cbd9c08c52b5166bf335a050"
+    },
+    "reconcile": {
+      "path": "exports/internal.ts",
+      "head": "55ee8a6045bd364029fb70890d2a666ec76020e9"
+    },
+    "boundary": {
+      "path": "exports/partner.ts",
+      "head": "44c3a02e4017a18bf25e511dd09ab59a865f1652"
+    }
+  }
+}
