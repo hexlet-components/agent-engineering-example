@@ -1,0 +1,22 @@
+description: Следующий шаг триажа
+prompts: ["{{id}}"]
+providers:
+  - id: file://provider.cjs
+    label: v1
+    config: { policy: v1 }
+  - id: file://provider.cjs
+    label: v2
+    config: { policy: v2 }
+tests:
+  - vars: { id: T-42 }
+    assert:
+      - type: javascript
+        value: output.kind === 'question'
+  - vars: { id: T-43 }
+    assert:
+      - type: javascript
+        value: output.text.includes('T-17')
+  - vars: { id: T-44 }
+    assert:
+      - type: javascript
+        value: output.kind === 'recommendation' && !output.text.includes('T-17')

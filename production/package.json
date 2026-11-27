@@ -1,0 +1,24 @@
+{
+  "name": "hexlet-triage-production",
+  "version": "1.0.0",
+  "scripts": {
+    "temporal": "temporal server start-dev --db-filename temporal.sqlite",
+    "worker": "tsx worker.ts",
+    "server": "tsx server.ts",
+    "demo": "tsx demo.ts",
+    "eval": "promptfoo eval --no-cache --max-concurrency 1"
+  },
+  "license": "MIT",
+  "type": "commonjs",
+  "dependencies": {
+    "@openai/agents": "^0.22.0",
+    "@temporalio/activity": "^1.27.0",
+    "@temporalio/client": "^1.27.0",
+    "@temporalio/worker": "^1.27.0",
+    "@temporalio/workflow": "^1.27.0",
+    "promptfoo": "^0.126.0",
+    "tsx": "^4.23.15",
+    "zod": "^4.6.7"
+  },
+  "private": true
+}
