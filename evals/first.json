@@ -1,0 +1,4 @@
+[
+  {"vars":{"id":"T-42"},"assert":[{"type":"javascript","value":"output.state.labels.includes('needs-info')"}]},
+  {"vars":{"id":"T-43"},"assert":[{"type":"javascript","value":"output.answer.duplicate === 'T-17'"}]}
+]

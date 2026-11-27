@@ -1,0 +1,13 @@
+{
+  "id": "T-90",
+  "version": "recorded",
+  "backend": "recorded",
+  "answer": {"duplicate": "T-17", "question": ""},
+  "state": {"labels": []},
+  "calls": [
+    {"name": "read_ticket", "id": "T-90", "text": "С включённым фильтром дат пуст экспорт PDF. При снятии фильтра документ полный."},
+    {"name": "read_ticket", "id": "T-17", "text": "Пустой CSV при включённом фильтре по дате. Без фильтра строки есть."}
+  ],
+  "latencyMs": null,
+  "costUsd": null
+}

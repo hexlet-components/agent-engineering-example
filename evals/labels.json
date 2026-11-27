@@ -1,0 +1,34 @@
+{
+  "T-42": {
+    "duplicate": null,
+    "needsInfo": true
+  },
+  "T-43": {
+    "duplicate": "T-17",
+    "needsInfo": false
+  },
+  "T-44": {
+    "duplicate": null,
+    "needsInfo": false
+  },
+  "T-45": {
+    "duplicate": "T-17",
+    "needsInfo": false
+  },
+  "T-71": {
+    "duplicate": "T-61",
+    "needsInfo": false
+  },
+  "T-72": {
+    "duplicate": null,
+    "needsInfo": false
+  },
+  "T-73": {
+    "duplicate": null,
+    "needsInfo": true
+  },
+  "T-90": {
+    "duplicate": null,
+    "needsInfo": true
+  }
+}

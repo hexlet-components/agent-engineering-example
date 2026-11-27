@@ -1,0 +1,17 @@
+{
+  "name": "ticket-triage-evals",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=24" },
+  "scripts": {
+    "first": "node experiment.ts first",
+    "replay": "node experiment.ts replay",
+    "metrics": "node experiment.ts metrics",
+    "calibrate": "node experiment.ts calibrate",
+    "compare": "node experiment.ts compare",
+    "release": "node experiment.ts release",
+    "regression": "node experiment.ts regression",
+    "regression:expanded": "node experiment.ts expanded"
+  },
+  "dependencies": { "@openai/agents": "0.22.0", "promptfoo": "0.126.0", "zod": "4.6.7" }
+}
