@@ -19,6 +19,11 @@ const load = <T>(path: string): T => JSON.parse(readFileSync(path, "utf8"));
 const save = (path: string, value: unknown) => writeFileSync(path, JSON.stringify(value, null, 2));
 mkdirSync("var", { recursive: true });
 const stage = process.argv[2];
+const backend = process.env.TRIAGE_BACKEND || "openai";
+if (!["openai", "local", "demo"].includes(backend)) throw new Error("Unknown backend: " + backend);
+if (backend === "demo" && !["first", "replay"].includes(stage)) {
+  throw new Error("Demo supports first and replay. Choose local or openai for fresh model outputs.");
+}
 const provider = (mode: string) => ({
   id: "file://" + resolve("provider.mjs"),
   label: mode,
